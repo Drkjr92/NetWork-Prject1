@@ -61,7 +61,7 @@ public class Main {
 
         String userQuit = "Quit";
 
-        while(userInput != userInput)
+        while()
         {
 
 
