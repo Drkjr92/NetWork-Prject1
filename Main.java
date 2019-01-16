@@ -51,8 +51,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String ipAddress = "";
-        int portNumber   = 22;
 
 
         System.out.print("Connecting to Server by port number..." + portNumber );
