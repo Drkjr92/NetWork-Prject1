@@ -30,10 +30,14 @@ public class Main {
 //------------------------------------------------------------   Try not to do everything in main() :p //
     public static class ClientProgram {
         
+        //ClientProgram field data
+        String ip;
+        int port;
+        
      public ClientProgram(String ip, int port)
      {
-         ip = ip;
-         port = port;
+         this.ip = ip;
+         this.port = port;
         
      }  
         
