@@ -53,7 +53,7 @@ public class Main {
 
 
 
-        System.out.print("Connecting to Server by port number..." + portNumber );
+        System.out.print("Connecting to Server by port number..." + //port # );
         /*
 
         block of code where the connection is going to be established.
