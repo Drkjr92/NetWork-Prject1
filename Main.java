@@ -26,6 +26,24 @@ Team Members:
  */
 
 public class Main {
+    
+//------------------------------------------------------------   Try not to do everything in main() :p //
+    public static class ClientProgram {
+        
+     public ClientProgram(String ip, int port)
+     {
+         ip = ip;
+         port = port;
+        
+     }  
+        
+        
+    }
+ //------------------------------------------------------------   
+    
+    
+    
+    
 
     public static void main(String[] args) {
 
@@ -59,22 +77,7 @@ public class Main {
 
         Scanner userInput = new Scanner(System.in);
 
-        String userQuit = "Quit";
-
-        while()
-        {
-
-
-
-
-
-
-
-
-        }
-
-
-
+       
 
 
 
