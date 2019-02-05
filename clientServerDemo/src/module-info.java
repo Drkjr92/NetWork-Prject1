@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author brandongivens
- *
- */
-module clientServerDemo {
-}
