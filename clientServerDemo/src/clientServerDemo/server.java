@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class server extends client{
+public class server{
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
