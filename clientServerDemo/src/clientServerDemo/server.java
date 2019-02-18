@@ -81,7 +81,7 @@ public class server{
 				System.out.println("Requested:  Host Current User");
 				// run the Unix "ps -ef" command
 			    // using the Runtime exec method:
-			    Process user = Runtime.getRuntime().exec("whoami");
+			    Process user = Runtime.getRuntime().exec("users");
 			            
 			    BufferedReader userInput = new BufferedReader(new 
 			           InputStreamReader(user.getInputStream()));
