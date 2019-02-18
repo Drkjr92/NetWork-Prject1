@@ -82,7 +82,26 @@ public class client {
 		input.close();
 		s.close();
 		input1.close();
-	}
+	}//end of main
+	
+	
+	//method to check IP validity 
+	public static boolean verifyIP(String IP) {  
+
+        String IP_ADDRESS_REGEX = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+                + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+                + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+                + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+
+        Pattern ipPattern = Pattern.compile(IP_ADDRESS_REGEX);
+        if (ipPattern.matcher(IP).matches()) {
+            return true;
+
+        }
+
+        return false;
+
+    }
 		
 	
 	public static void printMenu() {
