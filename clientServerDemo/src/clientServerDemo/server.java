@@ -1,4 +1,4 @@
-package clientServerDemo;
+package ServerClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,100 +7,88 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
-
-public class server{
-
+import java.util.Date;
+//Server Code
+public class server {
+	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-
+		System.out.println("Listening...");
 			int number = 0;
 			String temp = null;
-			ServerSocket serverSocket = new ServerSocket (3017);
+			ServerSocket serverSocket = new ServerSocket (3011);
 			Socket ss = serverSocket.accept();
 			Scanner input = new Scanner(ss.getInputStream());
+			BufferedReader br;
+			
 			
 			while (input.hasNextInt()) {
+				
+			System.out.println("Request received");	
 			
 			number = input.nextInt();
 			
 			switch (number) {
 			
 			case 1:
-				System.out.println("Requested:  Host Current Date and Time");
-				// run the Unix "ps -ef" command
-			    // using the Runtime exec method:
-			    Process date = Runtime.getRuntime().exec("date");
-			            
-			    BufferedReader dateInput = new BufferedReader(new 
-			           InputStreamReader(date.getInputStream()));
-			                
-			    temp = dateInput.readLine();
-			    System.out.println("Sent");
+				System.out.println("Request:  Current Date and Time");
+				Date date = new Date();
+				temp = "Current Date & Time: " + date.toString();
+				//temp = "Host Current Date and Time";
+				System.out.println("Sent\n");
 				break;
-
+				
 			case 2:
-				System.out.println("Requested:  Host Uptime");
-				// run the Unix "ps -ef" command
-			    // using the Runtime exec method:
-			    Process uptime = Runtime.getRuntime().exec("uptime");
-			            
-			    BufferedReader uptimeInput = new BufferedReader(new 
-			           InputStreamReader(uptime.getInputStream()));
-			                
-			    temp = uptimeInput.readLine();
-			    System.out.println("Sent");
+				System.out.println("Request:  Uptime");
+				Process uptime = Runtime.getRuntime().exec("uptime");
+				
+				br = new BufferedReader (new 
+						InputStreamReader(uptime.getInputStream()));
+				
+				temp = br.readLine();
+				
+				System.out.println("Sent\n");
 				break;
 				
 			case 3:
-				System.out.println("Requested:  Host Memory Use");
-				// run the Unix "ps -ef" command
-			    // using the Runtime exec method:
-			    Process memory = Runtime.getRuntime().exec("vm_stat");
-			            
-			    BufferedReader memoryInput = new BufferedReader(new 
-			           InputStreamReader(memory.getInputStream()));
-			                
-			    temp = memoryInput.readLine();
-			    System.out.println("Sent");
+				System.out.println("Request:  Memory Use");
+				
+				long totalMemory = Runtime.getRuntime().totalMemory();
+				long freeMemory = Runtime.getRuntime().freeMemory();;
+				long usedMemory = totalMemory - freeMemory;
+				
+				//temp = "Host Memory Use";
+				
+				temp = ("Current Total Memory: " + totalMemory + 
+						" Current Free Memory: " + freeMemory +
+						" Current Memory Usage: " + usedMemory);
+				System.out.println("Sent\n");
 				break;
 				
 			case 4:
-				System.out.println("Requested:  Host Netstat");
-				// run the Unix "ps -ef" command
-			    // using the Runtime exec method:
-			    Process netstat = Runtime.getRuntime().exec("netstat -a");
-			            
-			    BufferedReader netstatInput = new BufferedReader(new 
-			           InputStreamReader(netstat.getInputStream()));
-			                
-			    temp = netstatInput.readLine();
-			    System.out.println("Sent");
+				System.out.println("Request:  Netstat");
+				temp = "Host Netstat";
+				System.out.println("Sent\n");
 				break;
 				
 			case 5:
-				System.out.println("Requested:  Host Current User");
-				// run the Unix "ps -ef" command
-			    // using the Runtime exec method:
-			    Process user = Runtime.getRuntime().exec("users");
-			            
-			    BufferedReader userInput = new BufferedReader(new 
-			           InputStreamReader(user.getInputStream()));
-			                
-			    temp = userInput.readLine();
-			    System.out.println("Sent");
+				System.out.println("Request:  Users");
+				
+				Process users = Runtime.getRuntime().exec("users");
+				
+				br = new BufferedReader (new 
+						InputStreamReader(users.getInputStream()));
+				
+				temp = br.readLine();
+				
+				//temp = "Host Current User";
+				System.out.println("Sent\n");
 				break;
 				
 			case 6:
-				System.out.println("Requested:  Host Running Process");
-				// run the Unix "ps -ef" command
-			    // using the Runtime exec method:
-			    Process process = Runtime.getRuntime().exec("ps -A");
-			            
-			    BufferedReader processInput = new BufferedReader(new 
-			           InputStreamReader(process.getInputStream()));
-			                
-			    temp = processInput.readLine();
-			    System.out.println("Sent");
+				System.out.println("Request:  Running Process");
+				temp = "Host Running Process";
+				System.out.println("Sent\n");
 				break;
 				
 			case 7:
@@ -118,5 +106,5 @@ public class server{
 			serverSocket.close();
 	}
 
-}
+}//
 
