@@ -1,4 +1,4 @@
-package ServerClient;
+package clientServerDemo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,30 +14,37 @@ public class server {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		System.out.println("Listening...");
-			int number = 0;
-			String temp = null;
+			int number = 0;//Number for user input, used for switch statement
+			String temp = "";//String used to output info from server
+			
+			//Socket, Scanner & BufferedReader declaration
 			ServerSocket serverSocket = new ServerSocket (3011);
 			Socket ss = serverSocket.accept();
 			Scanner input = new Scanner(ss.getInputStream());
 			BufferedReader br;
 			
-			
+			//While loop runs until it receives "7" from client
 			while (input.hasNextInt()) {
 				
 			System.out.println("Request received");	
 			
+			//Sets number to user input for switch
 			number = input.nextInt();
 			
+			//Get request based on user input
 			switch (number) {
 			
+			//Date & Time Request
 			case 1:
 				System.out.println("Request:  Current Date and Time");
 				Date date = new Date();
+				
 				temp = "Current Date & Time: " + date.toString();
-				//temp = "Host Current Date and Time";
+				
 				System.out.println("Sent\n");
 				break;
-				
+
+				//Uptime Request
 			case 2:
 				System.out.println("Request:  Uptime");
 				Process uptime = Runtime.getRuntime().exec("uptime");
@@ -50,6 +57,7 @@ public class server {
 				System.out.println("Sent\n");
 				break;
 				
+				//Memory Usage Request
 			case 3:
 				System.out.println("Request:  Memory Use");
 				
@@ -57,22 +65,32 @@ public class server {
 				long freeMemory = Runtime.getRuntime().freeMemory();;
 				long usedMemory = totalMemory - freeMemory;
 				
-				//temp = "Host Memory Use";
-				
 				temp = ("Current Total Memory: " + totalMemory + 
 						" Current Free Memory: " + freeMemory +
 						" Current Memory Usage: " + usedMemory);
 				System.out.println("Sent\n");
 				break;
 				
+				//Netstat Request
 			case 4:
 				System.out.println("Request:  Netstat");
-				temp = "Host Netstat";
+				
+				Process netstat = Runtime.getRuntime().exec("netstat");
+				
+				br = new BufferedReader (new 
+						InputStreamReader(netstat.getInputStream()));
+				
+				temp = br.readLine();
+				
+				//Trying to add lines to "temp"
+				temp = temp + br.readLine();
+				
 				System.out.println("Sent\n");
 				break;
 				
+				//Users Request
 			case 5:
-				System.out.println("Request:  Users");
+				System.out.println("Request: Users");
 				
 				Process users = Runtime.getRuntime().exec("users");
 				
@@ -81,30 +99,44 @@ public class server {
 				
 				temp = br.readLine();
 				
-				//temp = "Host Current User";
 				System.out.println("Sent\n");
 				break;
 				
+				//Running Processes Request
 			case 6:
-				System.out.println("Request:  Running Process");
-				temp = "Host Running Process";
+				System.out.println("Request:  Running Processes");
+				
+				Process ps = Runtime.getRuntime().exec("ps");
+				
+				br = new BufferedReader (new 
+						InputStreamReader(ps.getInputStream()));
+				
+				temp = br.readLine();
+				
+				//Trying to add lines to "temp"
+				temp = temp + br.readLine();
+				
+				
 				System.out.println("Sent\n");
 				break;
 				
+				//Exit Case
 			case 7:
 				System.exit(0);
 				break;
-			}
+			}//end switch
 			
+			//Sends "temp" string to client
 			PrintStream ps = new PrintStream(ss.getOutputStream());
 			ps.println(temp);
-			}
+			}//end while
 			
+			//Closes server
 			System.out.println("Request:  Terminate Connection");
 			System.out.println("Terminate Connection");
 			input.close();
 			serverSocket.close();
-	}
+	}//end main
 
-}//
+}//end server
 
