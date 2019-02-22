@@ -1,4 +1,4 @@
-package ServerClient;
+package clientServerDemo;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -11,10 +11,11 @@ public class client {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		// TODO Auto-generated method stub
 
-		int number;
-		String temp = "";
-		int request = 0;
+		int number;//Number for user input, used for switch statement
+		String temp = "";//String used to display info from server
+		int request = 0;//Number sent to server for response
 		
+		//Used to get user input for response
 		Scanner input = new Scanner (System.in);
 		
 		//Socket is needed for communication between a client and a host server
@@ -26,10 +27,13 @@ public class client {
 		printMenu();
 		
 		do {
-				
+		//Sets number to user input for switch
 		number = input.nextInt();
+		
+		//Sets start time for response time
 		Long startTime = System.currentTimeMillis();
 		
+		//Get request based on user input
 		switch (number) {
 			
 		case 1: 
@@ -56,16 +60,18 @@ public class client {
 			request = 6;
 			break;
 			
+			//Exit case
 		case 7:
 			System.out.println("GoodBye.");
 			System.out.println("Connection ended.");
 			System.exit(0);
 			break;
 			
+			//Any input other than #'s 1-7 is invalid. Request another number
 		default:
 			System.out.println("Invalid Request.  Try Again..");
 			break;
-		}
+		}//end switch
 		
 		
 		//Pass number to the server
@@ -74,27 +80,34 @@ public class client {
 		//Pass number to the server through print stream
 		ps.println(request);
 		
+		temp = input.nextLine();
+		
+		//get data from server
 		if (input1.hasNextLine() == true)
 			temp = temp + input1.nextLine();
 		
+		//Print data from server
+		if(temp != null)
+			System.out.println(temp);
 		
-		System.out.println(temp);
+		//Get endtime for response & print total time
 		Long endTime = System.currentTimeMillis();
 		System.out.println("Response Time: " + (endTime - startTime));
 
-		
+		//Re-print Menu for user
+		//printMenu();
 		
 		//Resets temp String
 		temp = "";
 		
-		//Resets scanner
-		
+		//When user inputs 7, exit while loop
 		} while (request != 7);
 		
+		//Close all scanners & sockets before ending the program
 		input.close();
 		s.close();
 		input1.close();
-	}
+	}//end main
 		
 	
 	public static void printMenu() {
@@ -108,6 +121,6 @@ public class client {
 		System.out.println("\n");
 		System.out.println("Enter Request: ");		
 		//System.out.println("\n");
-	}
+	}//end printMenu
 
-}
+}//end client
