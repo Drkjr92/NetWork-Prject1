@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -13,28 +14,34 @@ public class server {
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
+		
+		//Show IP Address to user
+		InetAddress ip = InetAddress.getLocalHost();
+		System.out.println("Current IP address: " + ip);
 		System.out.println("Listening...");
-			int number = 0;//Number for user input, used for switch statement
-			String temp = "";//String used to output info from server
 			
-			//Socket, Scanner & BufferedReader declaration
-			ServerSocket serverSocket = new ServerSocket (3011);
-			Socket ss = serverSocket.accept();
-			Scanner input = new Scanner(ss.getInputStream());
-			BufferedReader br;
+		int number = 0;//Number for user input, used for switch statement
+		String temp = "";//String used to output info from server
+		long lineCount;//Long used to get # of lines from BufferedReader
 			
-			//While loop runs until it receives "7" from client
-			while (input.hasNextInt()) {
+		//Socket, Scanner & BufferedReader declaration
+		ServerSocket serverSocket = new ServerSocket (3011);
+		Socket ss = serverSocket.accept();
+		Scanner input = new Scanner(ss.getInputStream());
+		BufferedReader brRead, brCount;
+			
+		//While loop runs until it receives "7" from client
+		while (input.hasNextInt()) {
 				
-			System.out.println("Request received");	
+		System.out.println("Request received");	
+		
+		//Sets number to user input for switch
+		number = input.nextInt();
 			
-			//Sets number to user input for switch
-			number = input.nextInt();
+		//Get request based on user input
+		switch (number) {
 			
-			//Get request based on user input
-			switch (number) {
-			
-			//Date & Time Request
+		//Date & Time Request
 			case 1:
 				System.out.println("Request:  Current Date and Time");
 				Date date = new Date();
@@ -49,10 +56,10 @@ public class server {
 				System.out.println("Request:  Uptime");
 				Process uptime = Runtime.getRuntime().exec("uptime");
 				
-				br = new BufferedReader (new 
+				brRead = new BufferedReader (new 
 						InputStreamReader(uptime.getInputStream()));
 				
-				temp = br.readLine();
+				temp = brRead.readLine();
 				
 				System.out.println("Sent\n");
 				break;
@@ -77,13 +84,20 @@ public class server {
 				
 				Process netstat = Runtime.getRuntime().exec("netstat");
 				
-				br = new BufferedReader (new 
+				brRead = new BufferedReader (new 
+						InputStreamReader(netstat.getInputStream()));
+				brCount = new BufferedReader (new 
 						InputStreamReader(netstat.getInputStream()));
 				
-				temp = br.readLine();
 				
+				temp = brRead.readLine();
+				lineCount = brCount.lines().count();
 				//Trying to add lines to "temp"
-				temp = temp + br.readLine();
+				
+				System.out.println("Lines counted: " + lineCount);
+				int i;
+				for(i = 0; i < lineCount - 1; i++)
+					temp = temp + brRead.readLine();
 				
 				System.out.println("Sent\n");
 				break;
@@ -94,10 +108,10 @@ public class server {
 				
 				Process users = Runtime.getRuntime().exec("users");
 				
-				br = new BufferedReader (new 
+				brRead = new BufferedReader (new 
 						InputStreamReader(users.getInputStream()));
 				
-				temp = br.readLine();
+				temp = brRead.readLine();
 				
 				System.out.println("Sent\n");
 				break;
@@ -108,14 +122,20 @@ public class server {
 				
 				Process ps = Runtime.getRuntime().exec("ps");
 				
-				br = new BufferedReader (new 
+				brRead = new BufferedReader (new 
+						InputStreamReader(ps.getInputStream()));
+				brCount = new BufferedReader (new 
 						InputStreamReader(ps.getInputStream()));
 				
-				temp = br.readLine();
 				
+				temp = brRead.readLine();
+				lineCount = brCount.lines().count();
 				//Trying to add lines to "temp"
-				temp = temp + br.readLine();
 				
+				System.out.println("Lines counted: " + lineCount);
+				int j;
+				for(j = 0; j < lineCount - 1; j++)
+					temp = temp + brRead.readLine();
 				
 				System.out.println("Sent\n");
 				break;
@@ -129,6 +149,9 @@ public class server {
 			//Sends "temp" string to client
 			PrintStream ps = new PrintStream(ss.getOutputStream());
 			ps.println(temp);
+			
+			//Resets "temp" string
+			temp = "";
 			}//end while
 			
 			//Closes server
