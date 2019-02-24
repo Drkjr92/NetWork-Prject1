@@ -12,7 +12,7 @@ public class client {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		// TODO Auto-generated method stub
 
-		int number;//Number for user input, used for switch statement
+		int number = 0;//Number for user input, used for switch statement
 		int clientCount = 1;//Number for client count
 		String temp = "";//String used to display info from server
 		int request = 0;//Number sent to server for response
@@ -26,7 +26,7 @@ public class client {
 		serverIP = input.nextLine();
 		
 		while (!verifyIP(serverIP)) {
-            System.out.println("INVALID IP ADDRESS, TYPE AGAIN");
+            System.out.println("INVALID IP ADDRESS, RE-ENTER IP ADDRESS");
             serverIP = input.nextLine();
         }
 		
@@ -39,6 +39,14 @@ public class client {
 		printMenu();
 		
 		do {
+		//Reset request to 0
+			request = 0;
+			
+		//Sets number to user input for switch
+		while(!input.hasNextInt()){
+			System.out.println("INVALID CHARACTER, RE-ENTER REQUEST #");
+			input.nextLine();
+		}
 		//Sets number to user input for switch
 		number = input.nextInt();
 		
@@ -46,7 +54,16 @@ public class client {
 		//Set client count to 1 for invalid response
 		if(number < 7 && number > 0){
 			System.out.println("Enter # of clients:");
+		
+			//Check if client count is valid (clientCount >= 1)
+			while (clientCount < 1 || !input.hasNextInt()){
+				System.out.println("INVALID NUMBER, RE-ENTER # OF CLIENTS");
+				input.nextLine();
+				}//end short while
+		
 			clientCount = input.nextInt();
+	
+		//Set to 1 for invalid number
 		}else
 			clientCount = 1;
 		
