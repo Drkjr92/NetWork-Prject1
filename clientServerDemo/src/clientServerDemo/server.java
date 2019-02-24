@@ -18,7 +18,7 @@ public class server {
 		//Show IP Address to user
 		InetAddress ip = InetAddress.getLocalHost();
 		System.out.println("Current IP address: " + ip);
-		System.out.println("Listening...");
+		System.out.println("Listening...\n");
 			
 		int number = 0;//Number for user input, used for switch statement
 		String temp = "";//String used to output info from server
@@ -144,13 +144,17 @@ public class server {
 			case 7:
 				System.exit(0);
 				break;
+				
+				//Invalid Request Case
+			default:
+				System.out.println("Invalid Request\nNo Response Sent\n");
+				break;
 			}//end switch
 			
 			//Sends "temp" string to client
 			PrintStream ps = new PrintStream(ss.getOutputStream());
 			ps.println(temp);
 			
-			//Resets "temp" string
 			temp = "";
 			}//end while
 			
