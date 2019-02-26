@@ -32,7 +32,16 @@ public class client {
 		
 		//Socket is needed for communication between a client and a host server
 		//requiring the IP address and the port number (>2000)
-		Socket s = new Socket(serverIP,3011);
+		Socket s = new Socket();
+		
+		try{
+		s = new Socket(serverIP,3011);
+		} 
+		catch (Exception e) {
+		System.out.println("INCORRECT IP ADDRESS\n\nPROGRAM TERMINATED");
+		System.exit(1);
+		}
+		
 		
 		//Used to get the output from the server
 		Scanner input1 = new Scanner(s.getInputStream());
@@ -63,7 +72,7 @@ public class client {
 		
 			clientCount = input.nextInt();
 	
-		//Set to 1 for invalid number
+			//Set to 1 for invalid number
 		}else
 			clientCount = 1;
 		
@@ -124,6 +133,12 @@ public class client {
 		//get data from server
 		temp = temp + input1.nextLine();
 		
+		//Format memory usage text
+		if(number == 3){
+			temp = temp + "\n" + input1.nextLine();
+			temp = temp + "\n" + input1.nextLine();
+		}
+		
 		//If number request is not invalid, print data from server
 		if(number < 7 && number > 0)
 			System.out.println(temp);
@@ -135,10 +150,10 @@ public class client {
 		
 		//Get endtime for response & print total time
 		Long endTime = System.currentTimeMillis();
-		System.out.println("Response Time: " + (endTime - startTime));
+		System.out.println("Response Time: " + (endTime - startTime) + " ms\n");
 
 		//Re-print Menu for user, comment out to maintain sanity!!
-		//printMenu();
+		printMenu();
 		
 		//When user inputs 7, exit while loop
 		} while (request != 7);
