@@ -73,8 +73,8 @@ public class server {
 				long usedMemory = totalMemory - freeMemory;
 				
 				temp = ("Current Total Memory: " + totalMemory + 
-						" Current Free Memory: " + freeMemory +
-						" Current Memory Usage: " + usedMemory);
+						"\nCurrent Free Memory: " + freeMemory +
+						"\nCurrent Memory Usage: " + usedMemory);
 				System.out.println("Sent\n");
 				break;
 				
