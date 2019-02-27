@@ -15,7 +15,6 @@ public class client {
     private static Scanner scanning = new Scanner(System.in);
     private static String serverIP;
     private static int request = 0;
- 
 
     public static void main(String[] args) throws UnknownHostException, IOException {
         // TODO Auto-generated method stub
@@ -27,7 +26,6 @@ public class client {
         getIP(scanning); //sets the IP address
 
         while (true){
-        
         	
         	getRequest(serverIP); // sets the request number
 
@@ -57,9 +55,12 @@ public class client {
        threads.clear();
        
        int j;
-       for(j = 0; j < responseTimes.size(); j++)
+       double y = 0;
+       for(j = 0; j < responseTimes.size(); j++){
     	   System.out.println(responseTimes.get(j));
-       
+    	   y = y + responseTimes.get(j);
+       }
+       System.out.println("Response Time Average: " + y/threadCount + " \n");
        responseTimes.clear();
      
         }//end while
@@ -187,18 +188,18 @@ class ClientP1Thread implements Runnable
 
         try{
             System.out.println("Attempting to connect to Server with IP: " +serverIP + " with the request " + request );
-            socket = new Socket(serverIP, 3013);
+            socket = new Socket(serverIP, 3010);
             sendit = new PrintStream(socket.getOutputStream());
             System.out.println("Connected");
             System.out.println("==================================================================================");
             System.out.println("=============================CONNECTED TO SERVER==================================");
             System.out.println();
 
-            
+            Long startTime = System.currentTimeMillis();
             
             sendit.println(request);
             System.out.println(request);
-                Long startTime = System.currentTimeMillis();
+               
                 System.out.println("Your request has been sent and the timer has started");
                 System.out.println();
                 
@@ -211,10 +212,10 @@ class ClientP1Thread implements Runnable
                 		temp = temp + scanned.nextLine() + "\n";
                 else if (request != 7)
                 	temp = scanned.nextLine();
+              
+                endTime = System.currentTimeMillis();
                 
                 System.out.println(temp);
-                //}//end for loop
-                endTime = System.currentTimeMillis();
                 
                 responseTimes.add(endTime - startTime);
 
