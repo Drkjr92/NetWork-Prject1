@@ -25,7 +25,7 @@ public class server {
 		long lineCount;//Long used to get # of lines from BufferedReader
 			
 		//Socket, Scanner & BufferedReader declaration
-		ServerSocket serverSocket = new ServerSocket (3013);
+		ServerSocket serverSocket = new ServerSocket (3010);
 		Socket ss;
 		
 		BufferedReader brRead, brCount;
@@ -99,7 +99,7 @@ public class server {
 				System.out.println("Lines counted: " + lineCount);
 				int i;
 				for(i = 0; i < lineCount - 1; i++)
-					temp = temp + brRead.readLine() + "\n";
+					temp = temp + brRead.readLine();
 				
 				System.out.println("Sent\n");
 				break;
@@ -137,7 +137,7 @@ public class server {
 				System.out.println("Lines counted: " + lineCount);
 				int j;
 				for(j = 0; j < lineCount - 1; j++)
-					temp = temp + brRead.readLine() + "\n";
+					temp = temp + brRead.readLine();
 				
 				System.out.println("Sent\n");
 				break;
