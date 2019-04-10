@@ -100,6 +100,7 @@ public class client {
         while (!isValidRequest(request))
         {
             System.out.println("Request option invalid!");
+		printMenu();
             request = scanning.nextInt();
 
 
